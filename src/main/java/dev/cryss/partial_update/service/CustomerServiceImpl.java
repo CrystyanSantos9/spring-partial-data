@@ -14,12 +14,25 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repo;
 
     public CustomerResponseDto addCustomer(String name){
+
         Customer customer = Customer
                 .builder ()
                 .name (name)
                 .build ();
 
       return CustomerMapper.INSTANCE.toCustomerResponseDto (repo.save (customer)) ;
+
+    }
+
+    public CustomerResponseDto updateCustomer(Long id, String phone){
+
+
+
+        Customer customer = repo.findById (id).orElseThrow (()-> new RuntimeException ("Id nof found"+id));
+
+        //Atualiza 
+
+        return CustomerMapper.INSTANCE.toCustomerResponseDto (repo.save (customer)) ;
 
     }
 
