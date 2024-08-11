@@ -1,5 +1,6 @@
 package dev.cryss.partial_update.service;
 
+import dev.cryss.partial_update.dto.CustomerDto;
 import dev.cryss.partial_update.dto.CustomerResponseDto;
 import dev.cryss.partial_update.entity.Customer;
 import dev.cryss.partial_update.mapper.CustomerMapper;
@@ -24,15 +25,27 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
-    public CustomerResponseDto updateCustomer(Long id, String phone){
+    @Override
+    public CustomerResponseDto updateCustomer(Long id, String phone) {
+        Customer storedCustomer = repo.findById (id)
+                .orElseThrow (() -> new RuntimeException (String.format ("User with id %s not found.", id)));
 
 
+        return CustomerMapper.INSTANCE
+                .toCustomerResponseDto (repo.save (storedCustomer));
 
-        Customer customer = repo.findById (id).orElseThrow (()-> new RuntimeException ("Id nof found"+id));
+    }
 
-        //Atualiza 
+    @Override
+    public CustomerResponseDto updateCustomerWithMapping(Long id, CustomerDto dto) {
+        Customer storedCustomer = repo.findById (id)
+                .orElseThrow (() -> new RuntimeException (String.format ("User with id %s not found.", id)));
 
-        return CustomerMapper.INSTANCE.toCustomerResponseDto (repo.save (customer)) ;
+         CustomerMapper.INSTANCE
+                .updateCustomerFromDto (dto, storedCustomer);
+
+        return CustomerMapper.INSTANCE
+                .toCustomerResponseDto (repo.save (storedCustomer));
 
     }
 

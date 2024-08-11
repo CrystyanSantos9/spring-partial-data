@@ -28,5 +28,8 @@ public class Customer {
 
     public String name;
     public String phone;
+    private String phone97;
+    private String phone98;
+    private String phone99;
 
 }
