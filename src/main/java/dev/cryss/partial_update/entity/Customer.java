@@ -3,6 +3,7 @@ package dev.cryss.partial_update.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,9 +29,7 @@ public class Customer {
     private Long id;
 
     public String name;
-    public String phone;
-    private String phone97;
-    private String phone98;
-    private String phone99;
 
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = ContactPhone.class, mappedBy = "customer", cascade = CascadeType.ALL)
+    public Set<ContactPhone> contactPhones;
 }

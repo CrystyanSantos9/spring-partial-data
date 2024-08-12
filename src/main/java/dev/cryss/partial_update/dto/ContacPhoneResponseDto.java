@@ -5,18 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerResponseDto {
+public class ContacPhoneResponseDto {
 
     private Long id;
 
-    private String name;
-
-    private Set<ContacPhoneResponseDto> contactPhones;
-
+    private String phone;
 }

@@ -6,7 +6,9 @@ import dev.cryss.partial_update.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +32,18 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
+    @Transactional
     public ResponseEntity<CustomerResponseDto> updateCustomer(
+            @PathVariable(value = "customerId") Long customerId,
+            @RequestBody CustomerDto request) {
+
+        return ResponseEntity.ok (customerService.updateCustomerWithMapping (customerId, request));
+
+    }
+
+    @PatchMapping("/{customerId}")
+    @Transactional
+    public ResponseEntity<CustomerResponseDto> patchCustomer(
             @PathVariable(value = "customerId") Long customerId,
             @RequestBody CustomerDto request) {
 
